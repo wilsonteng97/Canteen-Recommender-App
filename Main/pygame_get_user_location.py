@@ -1,6 +1,5 @@
 import pygame
 
-
 ## define event handler for mouse click. 
 ## this event handler will be fired (activated) when user clicks a mouse button anywhere in the display window
 def MouseClick():
@@ -27,7 +26,7 @@ def get_user_location():
    
    # initialize display window, call it screen
    screen = pygame.display.set_mode((W, H))
-   
+   pygame.display.set_caption("Click on your current location")
    # read image file and rescale it to the window size
    screenIm = pygame.image.load("Canteen-Recommender-App/Main/NTUcampus.png")
    screenIm = pygame.transform.scale(screenIm, (W , H))
@@ -43,13 +42,13 @@ def get_user_location():
    
    # get outputs of Mouseclick event handler 
    buttonX, buttonY = MouseClick()
-   print((buttonX , buttonY))
+  #  print((buttonX , buttonY))
    
    return (buttonX , buttonY)
 
 def main():
     pygame.init()
-    get_user_location()
+    print(get_user_location())
 
 if __name__ == '__main__':
    main()

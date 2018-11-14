@@ -15,14 +15,14 @@ class Checkbar(Frame):
 
 if __name__ == '__main__':
    root = Tk()
-   lng = Checkbar(root, ['< $5', '$5-10', '> $10'])
-   tgl = Checkbar(root, ['Food','Beverage'])
-   lng.pack(side=TOP,  fill=X)
-   tgl.pack(side=LEFT)
-   lng.config(relief=GROOVE, bd=2)
+   pricerange = Checkbar(root, ['< $5', '$5-10', '> $10'])
+   item = Checkbar(root, ['Food','Beverage'])
+   pricerange.pack(side=TOP,  fill=X)
+   item.pack(side=LEFT)
+   pricerange.config(relief=GROOVE, bd=2)
 
    def allstates(): 
-      print(list(lng.state()), list(tgl.state()))
+      print(list(pricerange.state()), list(item.state()))
 
    Button(root, text='Quit', command=root.quit).pack(side=RIGHT)
    Button(root, text='Peek', command=allstates).pack(side=RIGHT)

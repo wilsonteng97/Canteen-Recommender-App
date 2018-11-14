@@ -11,6 +11,7 @@ PricePreference = [0,0,0] # [(< $5), ($5-10), (> $10)]
 ItemPreference =[0,0] # [Food, Beverage]
 
 
+
 LARGE_FONT = ("Verdana", 12)
 
 # Functions for all Frames to use

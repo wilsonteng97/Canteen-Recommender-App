@@ -230,7 +230,7 @@ class GeneralDirection(Frame):
         global UserPosition
         lstsel = self.controller.get_page(Choosing).lst1.state()
         CanteenPosition = CanteenList[lstsel]["location"]
-        howtogo_module.howtogo_window(UserPosition, CanteenPosition)
+        howtogo_module.howtogo_window(self, UserPosition, CanteenPosition)
         # print("2_I am being shown...")
         # global UserPosition
         # global CanteenList

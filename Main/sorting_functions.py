@@ -69,7 +69,7 @@ if __name__ == '__main__':
     pprint(test2)
 
 
-# Other Functions
+# Other Functions 
 def count_distance(user_location,canteens_location):
     dist = math.sqrt((canteens_location[1] - user_location[0]) ** 2 + (canteens_location[1] - user_location[0]) ** 2)
     roundeddist = round(dist)

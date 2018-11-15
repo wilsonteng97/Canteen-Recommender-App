@@ -100,17 +100,16 @@ def updateCanteenList_global():
                                                       ItemPreference)
     pprint(CanteenList)
 
-def init_dbllistbox_choosingframe():
-    controller.show_frame(Choosing)
-    listbox_module.dbllistbox(self, data_entries=CanteenList)
+def init_dbllistbox_choosingframe(Frame):
+    Frame.controller.show_frame(Choosing)
+    listbox_module.dbllistbox(Frame, data_entries=CanteenList)
 
 
 # "Preferences" frame
 class Preferences(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        print(controller)
-        print(type(controller))
+        self.controller = controller
         
         # Leaves "Next" Button diabled if users select nothing \
         # from either "PricePreference" & "ItemPreference"
@@ -145,7 +144,7 @@ class Preferences(Frame):
         button0.pack(pady=15)
         
         button1 = ttk.Button(self, text="Next", state=DISABLED,
-                                command=lambda: combine_funcs(init_dbllistbox_choosingframe()))
+                                command=lambda: combine_funcs(init_dbllistbox_choosingframe(self)))
         button1.pack()
 
         button2 = ttk.Button(self, text="Back to Home", 

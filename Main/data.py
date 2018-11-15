@@ -43,18 +43,18 @@ AnandaKitchenitem = {("Food","Prata"): 1.0,
                      ("Food","Pasta") : 5.1, 
                      ("Beverage","Read Bean") : 1.0, 
                      ("Beverage","Soya Bean") : 1.4}
-FoodgleFoodCourtitem = {("Food","Fish and Chips"): 6, 
-                        ("Food","Pasta") : 4, 
-                        ("Food","Korean Cuisine") : 6, 
+FoodgleFoodCourtitem = {("Food","Fish and Chips"): 6.0, 
+                        ("Food","Pasta") : 4.0, 
+                        ("Food","Korean Cuisine") : 6.0, 
                         ("Beverage","Kopi O Beng") : 0.9, 
                         ("Beverage","Ice Lemon Tea") : 1.5,
                         ("Beverage","Coconut") : 2.5}
-NorthHillFoodCourtitem = {("Food","Vegetable Rice"): 3, 
-                          ("Food","Lamb Chop") : 9, 
-                          ("Food","Ice Cream") : 2, 
+NorthHillFoodCourtitem = {("Food","Vegetable Rice"): 3.0, 
+                          ("Food","Lamb Chop") : 9.0, 
+                          ("Food","Ice Cream") : 2.0, 
                           ("Beverage","Ice Peach Tea") : 1.5, 
                           ("Beverage","Ice Lemon Tea") : 1.3, 
-                          ("Beverage","Kickapoo") : 1}
+                          ("Beverage","Kickapoo") : 1.0}
 
 
 

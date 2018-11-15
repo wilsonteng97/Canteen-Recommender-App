@@ -16,6 +16,7 @@ ItemPreference =[0,0] # [Food, Beverage]
 UserPosition = (0,0) # (x-coordinate, y-coordinate)
 CanteenList = []
 CanteenList_sorted = []
+lstsel = 0
 
 LARGE_FONT = ("Verdana", 12)
 
@@ -41,6 +42,7 @@ class CanteenRecommender(Tk):
         self.frames = {}
 
         for F in (StartPage, Preferences, Choosing, GeneralDirection):
+            print(F)
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -50,6 +52,10 @@ class CanteenRecommender(Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+        frame.event_generate("<<ShowFrame>>")
+    
+    def get_page(self, page_class):
+        return self.frames[page_class]
 
 
 # "StartPage" frame Functions
@@ -67,6 +73,7 @@ def getlocation():
 class StartPage(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+        self.controller = controller        
 
         label = Label(self, text="NTU Canteen Recommender", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
@@ -102,8 +109,11 @@ def updateCanteenList_global():
                                                       ItemPreference)
     pprint(CanteenList_sorted)
 
-# def init_dbllistbox_choosingframe(Frame):
-#     Frame.controller.show_frame(Choosing)
+def init_dbllistbox_choosingframe(Frame):
+    global CanteenRecommender
+    global Choosing
+    Frame.controller.show_frame(Choosing)
+    updateCanteenList_global()
 
 # "Preferences" frame
 class Preferences(Frame):
@@ -143,49 +153,110 @@ class Preferences(Frame):
         button0.pack(pady=15)
         
         button1 = ttk.Button(self, text="Next", state=DISABLED,
-                                command=lambda: combine_funcs(controller.show_frame(Choosing),
-                                                              updateCanteenList_global()
-                                                              ))
+                                command=lambda: combine_funcs(updateCanteenList_global(),
+                                                              controller.show_frame(Choosing)))
         button1.pack()
+
+        # button1 = ttk.Button(self, text="Next", state=DISABLED,
+        #                         command=lambda: combine_funcs(init_dbllistbox_choosingframe(self)
+        #                                                       ))
+        # button1.pack()
 
         button2 = ttk.Button(self, text="Back to Home", 
                             command=lambda: controller.show_frame(StartPage))
         button2.pack()
 
 
-def howtogo(lst):
-    global UserPosition
-    global CanteenList
-    CanteenPosition = CanteenList[lst.state()]["location"]
-    howtogo_module.howtogo_window(UserPosition, CanteenPosition)
+# def howtogo():
+#     global UserPosition
+#     global CanteenList
+#     global lstsel
+#     print(lstsel)
+#     CanteenPosition = CanteenList[lstsel]["location"]
+#     howtogo_module.howtogo_window(UserPosition, CanteenPosition)
 
 class Choosing(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+        self.parent = parent
+        self.controller = controller
+        self.bind("<<ShowFrame>>", self.on_show_frame)
         label = ttk.Label(self, text="Which Canteen would you like to go to?", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
-        
-        lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
+
+        # def reset():
+        #     lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
+        #     lstsel = 0
+        # lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
+        button0 = ttk.Button(self, text="Click Me!",
+                                command=lambda: None)
+        button0.pack()
 
         button1 = ttk.Button(self, text="How To Go!",
-                                command=lambda: howtogo(lst1))
+                                command=lambda: combine_funcs(controller.show_frame(GeneralDirection)))
         button1.pack()
 
         button2 = ttk.Button(self, text="Quit", 
                             command=quit)
         button2.pack()
+    
+    def on_show_frame(self, event):
+        global CanteenList_sorted
+        print("I am being shown...")
+        print(CanteenList_sorted)
+        self.lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
+
+
+    
 
 
 # "GeneralDirection" frame
 class GeneralDirection(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        label = ttk.Label(self, text="Directions", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
+        self.controller = controller 
+        self.bind("<<ShowFrame>>", self.on_show_frame) 
+        label = ttk.Label(self, text="Thank you for using Canteen Recommender App", font=LARGE_FONT)
+        label.pack()
+        label = ttk.Label(self, text="Done by: Wilson Thurman Teng, Jay Yap & Wong Rui Yang")
+        label.pack()
+        
 
-        button1 = ttk.Button(self, text="Back to Home", 
-                            command=lambda: controller.show_frame(StartPage))
+        button1 = ttk.Button(self, text="Quit", 
+                            command=lambda: quit())
         button1.pack()
+    def on_show_frame(self, event):
+        global CanteenList
+        global UserPosition
+        lstsel = self.controller.get_page(Choosing).lst1.state()
+        CanteenPosition = CanteenList[lstsel]["location"]
+        howtogo_module.howtogo_window(UserPosition, CanteenPosition)
+        # print("2_I am being shown...")
+        # global UserPosition
+        # global CanteenList
+        # global lstsel
+        # lstsel = self.controller.get_page(Choosing).lst1.state()
+        # print(lstsel)
+        # CanteenPosition = CanteenList[lstsel]["location"]
+        # print(CanteenPosition)
+        # distance = sorting_module.count_distance(UserPosition, CanteenPosition)
+
+        # #canvas##
+        # canvas = Canvas(root)
+        # canvas.pack(fill=BOTH, expand=1) # Stretch canvas to root window size.
+
+        # ##image + line + circle##
+        # background_image=PhotoImage(file="Canteen-Recommender-App/Main/NTUcampus.png")
+        # image = canvas.create_image(0, 0, anchor=NW, image=background_image)
+        # line = canvas.create_line( userlocate[0] ,userlocate[1], cantlocate[0],cantlocate[1], fill="red",width=3,arrow=LAST)
+
+        # circleuser = canvas.create_oval(userlocate[0]-5, userlocate[1]-5, userlocate[0] + 5, userlocate[1] + 5,fill="#000fff000", outline='black', width=3)
+        # circlecant= canvas.create_oval(cantlocate[0]-5, cantlocate[1]-5, cantlocate[0] + 5, cantlocate[1] + 5,fill="#000fff000",outline='black',width=3)
+
+        # ##status bar##
+        # status = Label(root,bd=1,relief=SUNKEN,anchor=W)
+        # status["text"] = "The distance between you and the canteen is: " + str(distance)
+        # status.pack(side = BOTTOM,fill="x")
 
 
 app = CanteenRecommender()

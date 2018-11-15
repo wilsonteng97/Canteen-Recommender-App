@@ -26,7 +26,7 @@ class dbllistbox(Frame):
             count += 1
 
     def load_models(self, *args):
-        selection = self.make_listbox.curselection()[0] 
+        selection = self.make_listbox.curselection()[0]
         # clear model listbox
         self.model_listbox.delete(0, END)
 

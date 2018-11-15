@@ -3,9 +3,9 @@ import tkinter.messagebox
 from PIL import Image
 
 root = Tk()
-root.geometry("571x778")
+# root.geometry("571x778")
 
-photo = PhotoImage(file="NTUcampus.png")
+photo = PhotoImage(file="Canteen-Recommender-App/Main/NTUcampus.png")
 label = Label(root, image=photo)
 label.pack()
 

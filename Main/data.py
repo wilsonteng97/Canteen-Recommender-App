@@ -1,5 +1,5 @@
 FoodCourt1item = {("Food","Ma La Xiang Guo"): 5.0, 
-                  ("Foof","Ramen") : 2.50, 
+                  ("Food","Ramen") : 2.50, 
                   ("Food","Cai Fan") : 4.0, 
                   ("Beverage","Teh Beng") : 1.2, 
                   ("Beverage","Kopi C Beng") : 1.2}

@@ -10,6 +10,7 @@ import Create_Checkbox as pref_module
 PricePreference = [0,0,0] # [(< $5), ($5-10), (> $10)]
 ItemPreference =[0,0] # [Food, Beverage]
 UserPosition = (0,0) # (x-coordinate, y-coordinate)
+CanteenSelection = (0,0)
 
 LARGE_FONT = ("Verdana", 12)
 
@@ -34,7 +35,7 @@ class CanteenRecommender(Tk):
 
         self.frames = {}
 
-        for F in (StartPage, Preferences, PageTwo):
+        for F in (StartPage, Preferences, Choosing, GeneralDirection):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -93,7 +94,7 @@ class Preferences(Frame):
             else:
                 button1.configure(state=NORMAL)   
 
-        label = ttk.Label(self, text="PageOne", font=LARGE_FONT)
+        label = ttk.Label(self, text="We want to know your preferences!", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
         
         label1 = ttk.Label(self, text="Choose your price range")
@@ -108,36 +109,63 @@ class Preferences(Frame):
         chk2 = pref_module.Checkbar(self, ['Food', 'Beverage'])
         chk2.pack()
 
-        button0 = Button(self, text='Update', 
+        button0 = ttk.Button(self, text='Update', 
                         command=lambda: combine_funcs(updatePricePreference_global(chk1), 
                                                       updateItemPreference_global(chk2),
                                                       check_checkboxes(),
                                                       print()))
-        button0.pack(side=LEFT)
+        button0.pack(pady=15)
         
         button1 = ttk.Button(self, text="Next", state=DISABLED,
                                 command=lambda: combine_funcs(getlocation(), 
-                                                              controller.show_frame(PageTwo)))
+                                                              controller.show_frame(Choosing)))
         button1.pack()
 
         button2 = ttk.Button(self, text="Back to Home", 
                             command=lambda: controller.show_frame(StartPage))
         button2.pack()
 
-
-# "PageTwo" frame
-class PageTwo(Frame):
+class Choosing(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        label = ttk.Label(self, text="PageTwo", font=LARGE_FONT)
+        label = ttk.Label(self, text="Choose 3 options!", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
+
+        def refresh_itemprice(lst):
+            lst.delete(0,'end')
+            selection = lst.curselection()
+            for items in Canteen[selection]["itemlist"]:
+                item_entry = str(items[1]) + ": $" + str(price)
+                lst.insert(item_entry)       
+            lst.configure(state=ENABLED)
+
+        
+        lst1 = Listbox(self, width=30, height=15, selectmode=SINGLE)
+        for cant in Canteen:
+            lst1.insert(END, cant["name"])
+        lst1.pack(side=LEFT)
+        
+        lst2 = Listbox(self, width=30, height=15)
+        lst2.pack(side=LEFT)
+
+        button0 = ttk.Button(self, text="Select", 
+                            command=lambda: refresh_itemprice(lst2))
+        button0.pack(pady=10)
+
         button1 = ttk.Button(self, text="Back to Home", 
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
-        # button2 = ttk.Button(self, text="PageOne", 
-        #                     command=lambda: controller.show_frame(PageOne))
-        # button2.pack()
+# "GeneralDirection" frame
+class GeneralDirection(Frame):
+    def __init__(self, parent, controller):
+        Frame.__init__(self, parent)
+        label = ttk.Label(self, text="Directions", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        button1 = ttk.Button(self, text="Back to Home", 
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack()
 
 
 app = CanteenRecommender()

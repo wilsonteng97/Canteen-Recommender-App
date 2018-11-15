@@ -1,16 +1,19 @@
 from tkinter import *
 from tkinter import ttk
 import pygame
+from pprint import pprint 
 
 from data import *
 import pygame_get_user_location as location_module
 import Create_Checkbox as pref_module
+import sorting_functions as sorting_module
 
 # Global user variables
 PricePreference = [0,0,0] # [(< $5), ($5-10), (> $10)]
 ItemPreference =[0,0] # [Food, Beverage]
 UserPosition = (0,0) # (x-coordinate, y-coordinate)
-CanteenSelection = (0,0)
+CanteenList = []
+SelectedCanteen = []
 
 LARGE_FONT = ("Verdana", 12)
 
@@ -46,6 +49,18 @@ class CanteenRecommender(Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+
+# "StartPage" frame Functions
+def getlocation():
+    global UserPosition
+    global CanteenList
+    pygame.init()
+    UserPosition = location_module.get_user_location()
+    pygame.quit()
+    CanteenList = sorting_module.sort_canteen_bydistance(Canteen, UserPosition)
+    pprint(CanteenList)
+    print(f"UserPosition is {UserPosition}   --> (x-coordinate, y-coordinate)")
+
 # "StartPage" frame
 class StartPage(Frame):
     def __init__(self, parent, controller):
@@ -54,7 +69,8 @@ class StartPage(Frame):
         label.pack(pady=10, padx=10)
 
         button1 = ttk.Button(self, text="Start", 
-                            command=lambda: controller.show_frame(Preferences))
+                            command=lambda: combine_funcs(getlocation(),
+                                                          controller.show_frame(Preferences)))
         button1.pack()
 
         button2 = ttk.Button(self, text="Quit", 
@@ -63,13 +79,6 @@ class StartPage(Frame):
      
 
 # "Preferences" frame Functions 
-def getlocation():
-    global UserPosition
-    pygame.init()
-    UserPosition = location_module.get_user_location()
-    pygame.quit()
-    print(f"UserPosition is {UserPosition}   --> (x-coordinate, y-coordinate)")
-
 def updatePricePreference_global(chk):
     global PricePreference
     PricePreference = list(chk.state())
@@ -80,6 +89,15 @@ def updateItemPreference_global(chk):
     ItemPreference = list(chk.state())
     print(f"ItemPreference is {ItemPreference}     --> [Food, Beverage]")
 
+def updateCanteenList_global():
+    global CanteenList
+    global PricePreference
+    global ItemPreference
+    CanteenList = sorting_module.sortby_price_bevfood(CanteenList, 
+                                                      PricePreference, 
+                                                      ItemPreference)
+    pprint(CanteenList)
+        
 # "Preferences" frame
 class Preferences(Frame):
     def __init__(self, parent, controller):
@@ -113,12 +131,12 @@ class Preferences(Frame):
                         command=lambda: combine_funcs(updatePricePreference_global(chk1), 
                                                       updateItemPreference_global(chk2),
                                                       check_checkboxes(),
+                                                      updateCanteenList_global(),
                                                       print()))
         button0.pack(pady=15)
         
         button1 = ttk.Button(self, text="Next", state=DISABLED,
-                                command=lambda: combine_funcs(getlocation(), 
-                                                              controller.show_frame(Choosing)))
+                                command=lambda: controller.show_frame(Choosing))
         button1.pack()
 
         button2 = ttk.Button(self, text="Back to Home", 
@@ -128,28 +146,36 @@ class Preferences(Frame):
 class Choosing(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        label = ttk.Label(self, text="Choose 3 options!", font=LARGE_FONT)
+        label = ttk.Label(self, text="Tell me how to go!", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        def refresh_itemprice(lst):
-            lst.delete(0,'end')
-            selection = lst.curselection()
-            for items in Canteen[selection]["itemlist"]:
-                item_entry = str(items[1]) + ": $" + str(price)
-                lst.insert(item_entry)       
-            lst.configure(state=ENABLED)
+        global CanteenList
+        global SelectedCanteen
+        
+        def updatelistbox(lst):
+            for cant in CanteenList:
+                print(cant, "\n")
+                lst.insert(END, cant[0])
 
+        def refresh_itemprice(lst):
+            # lst.delete(0,'end')
+            selection = lst.curselection()
+            print(selection[0])
+            for foodcourt in sorting_module.return_selected_foodcourt(CanteenList, selection_tuple=selection[0]):
+                print(foodcourt)
+                for items in foodcourt[1]:
+                    item_entry = str(items[0]) + ": $" + str(1)
+                    lst.insert(item_entry)       
         
         lst1 = Listbox(self, width=30, height=15, selectmode=SINGLE)
-        for cant in Canteen:
-            lst1.insert(END, cant["name"])
+        updatelistbox(lst1)
         lst1.pack(side=LEFT)
         
         lst2 = Listbox(self, width=30, height=15)
         lst2.pack(side=LEFT)
 
         button0 = ttk.Button(self, text="Select", 
-                            command=lambda: refresh_itemprice(lst2))
+                            command=lambda: print(lst2.curselection()))
         button0.pack(pady=10)
 
         button1 = ttk.Button(self, text="Back to Home", 

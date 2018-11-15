@@ -53,14 +53,15 @@ def sortby_price_bevfood(CanteenList, pricerange, bevfood):
         collatedsortedlist.append(sortedlist)
     return collatedsortedlist
 
-def return_selected_foodcourt(CanteenList, selection_tuple=(3,)):
-    selection = selection_tuple[0]
-    return CanteenList[selection]
+def return_selected_foodcourt(CanteenList, selection_tuple):
+    # selection = selection_tuple[0]
+    return CanteenList[selection_tuple]
+
 
 if __name__ == '__main__':
     test0 = sort_canteen_bydistance(Canteen, (0,0))
     test1 = sortby_price_bevfood(test0, [1,1,0], [1,0])
-    test2 = return_selected_foodcourt(test1, selection_tuple=(0,))
+    test2 = return_selected_foodcourt(test1, 3)
     pprint(test0)
     print()
     pprint(test1)

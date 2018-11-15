@@ -2,15 +2,14 @@ from tkinter import *
 from tkinter import ttk
 import pygame
 
+from data import *
 import pygame_get_user_location as location_module
 import Create_Checkbox as pref_module
 
 # Global user variables
-UserPosition = (0,0) # (x-coordinate, y-coordinate)
 PricePreference = [0,0,0] # [(< $5), ($5-10), (> $10)]
 ItemPreference =[0,0] # [Food, Beverage]
-
-
+UserPosition = (0,0) # (x-coordinate, y-coordinate)
 
 LARGE_FONT = ("Verdana", 12)
 

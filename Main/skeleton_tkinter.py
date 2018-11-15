@@ -151,11 +151,11 @@ class Choosing(Frame):
 
         global CanteenList
         global SelectedCanteen
-        
+
         def updatelistbox(lst):
-            for cant in CanteenList:
-                print(cant, "\n")
-                lst.insert(END, cant[0])
+            for cant in Canteen:
+                # print(cant, "\n")
+                lst.insert(END, cant["name"])
 
         def refresh_itemprice(lst):
             # lst.delete(0,'end')

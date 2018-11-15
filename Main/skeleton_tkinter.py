@@ -7,6 +7,7 @@ from data import *
 import pygame_get_user_location as location_module
 import Create_Checkbox as pref_module
 import sorting_functions as sorting_module
+import Create_DoubleListbox as listbox_module
 
 # Global user variables
 PricePreference = [0,0,0] # [(< $5), ($5-10), (> $10)]
@@ -60,11 +61,12 @@ def getlocation():
     CanteenList = sorting_module.sort_canteen_bydistance(Canteen, UserPosition)
     pprint(CanteenList)
     print(f"UserPosition is {UserPosition}   --> (x-coordinate, y-coordinate)")
-
+    
 # "StartPage" frame
 class StartPage(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+
         label = Label(self, text="NTU Canteen Recommender", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
@@ -97,11 +99,18 @@ def updateCanteenList_global():
                                                       PricePreference, 
                                                       ItemPreference)
     pprint(CanteenList)
-        
+
+def init_dbllistbox_choosingframe():
+    controller.show_frame(Choosing)
+    listbox_module.dbllistbox(self, data_entries=CanteenList)
+
+
 # "Preferences" frame
 class Preferences(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+        print(controller)
+        print(type(controller))
         
         # Leaves "Next" Button diabled if users select nothing \
         # from either "PricePreference" & "ItemPreference"
@@ -136,7 +145,7 @@ class Preferences(Frame):
         button0.pack(pady=15)
         
         button1 = ttk.Button(self, text="Next", state=DISABLED,
-                                command=lambda: controller.show_frame(Choosing))
+                                command=lambda: combine_funcs(init_dbllistbox_choosingframe()))
         button1.pack()
 
         button2 = ttk.Button(self, text="Back to Home", 
@@ -152,30 +161,33 @@ class Choosing(Frame):
         global CanteenList
         global SelectedCanteen
 
-        def updatelistbox(lst):
-            for cant in Canteen:
-                # print(cant, "\n")
-                lst.insert(END, cant["name"])
+        # listbox_module.dbllistbox(self, data_entries=CanteenList)
 
-        def refresh_itemprice(lst):
-            # lst.delete(0,'end')
-            selection = lst.curselection()
-            print(selection[0])
-            for foodcourt in sorting_module.return_selected_foodcourt(CanteenList, selection_tuple=selection[0]):
-                print(foodcourt)
-                for items in foodcourt[1]:
-                    item_entry = str(items[0]) + ": $" + str(1)
-                    lst.insert(item_entry)       
+        # def updatelistbox(lst):
+        #     for cant in Canteen:
+        #         # print(cant, "\n")
+        #         lst.insert(END, cant["name"])
+
+        # def refresh_itemprice(lst):
+        #     # lst.delete(0,'end')
+        #     selection = lst.curselection()
+        #     print(selection[0])
+        #     for foodcourt in sorting_module.return_selected_foodcourt(CanteenList, selection_tuple=selection[0]):
+        #         print(foodcourt)
+        #         for items in foodcourt[1]:
+        #             item_entry = str(items[0]) + ": $" + str(1)
+        #             lst.insert(item_entry)       
         
-        lst1 = Listbox(self, width=30, height=15, selectmode=SINGLE)
-        updatelistbox(lst1)
-        lst1.pack(side=LEFT)
+        # lst1 = Listbox(self, width=30, height=15, selectmode=SINGLE)
+        # updatelistbox(lst1)
+        # lst1.pack(side=LEFT)
         
-        lst2 = Listbox(self, width=30, height=15)
-        lst2.pack(side=LEFT)
+        # lst2 = Listbox(self, width=30, height=15)
+        # lst2.pack(side=LEFT)
+
 
         button0 = ttk.Button(self, text="Select", 
-                            command=lambda: print(lst2.curselection()))
+                            command=lambda: None)
         button0.pack(pady=10)
 
         button1 = ttk.Button(self, text="Back to Home", 

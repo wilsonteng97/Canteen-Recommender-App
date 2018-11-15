@@ -61,43 +61,45 @@ NorthHillFoodCourtitem = {("Food","Vegetable Rice"): 3.0,
 FoodCourt1={"name" : "Foodcourt 1" ,
             "itemlist" : FoodCourt1item , 
             "rank" : 1 , 
-            'location' : (420,532) }
+            'location' : (556,514) }
 FoodCourt2={"name" : "Foodcourt 2" ,
             "itemlist" : FoodCourt2item , 
             "rank" : 2 , 
-            'location' : (394,468) }
+            'location' : (613,419) }
 FoodCourt9={"name" : "Foodcourt 9" ,
             "itemlist" : FoodCourt9item , 
             "rank" : 3 , 
-            'location' : (399,297) }
+            'location' : (792,241) }
 FoodCourt11={"name" : "Foodcourt 11" ,
              "itemlist" : FoodCourt11item , 
              "rank" : 4 , 
-             'location' : (429,196) }
+             'location' : (948,712) }
 FoodCourt13={"name" : "Foodcourt 13" ,
              "itemlist" : FoodCourt13item , 
              "rank" : 5 , 
-             'location' : (216,328) }
+             'location' : (560,74) }
 FoodCourt14={"name" : "Foodcourt 14" ,
              "itemlist" : FoodCourt14item , 
              "rank" : 6 , 
-             'location' : (258,276) }
+             'location' : (668,82) }
 FoodCourt16={"name" : "Foodcourt 16" ,
              "itemlist" : FoodCourt16item , 
              "rank" : 7 , 
-             'location' : (215,379) }
+             'location' : (494,412) }
 AnandaKitchen={"name" : "Ananda Kitchen" ,
                "itemlist" : AnandaKitchenitem , 
                "rank" : 8 , 
-               'location' : (507,251) }
+               'location' : (931,274) }
 FoodgleFoodCourt={"name" : "Foodgle Foodcourt" ,
                   "itemlist" : FoodgleFoodCourtitem , 
                   "rank" : 9 , 
-                  'location' : (372,204) }
+                  'location' : (861,101) }
 NorthHillFoodCourt={"name" : "Northhill Foodcourt" ,
                     "itemlist" : NorthHillFoodCourtitem , 
                     "rank" : 10 , 
-                    'location' : (515,236) }
+                    'location' : (961,257) }
+
+
 
 
 

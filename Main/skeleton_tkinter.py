@@ -224,11 +224,11 @@ class GeneralDirection(Frame):
     
     def on_show_frame(self, event):
         global CanteenList
-        global UserPosition
-        self.controller.get_page(Choosing).lst1.lbstate = DISABLED
+        global UserPosition     
         lstsel = self.controller.get_page(Choosing).lst1.state()
         CanteenPosition = CanteenList[lstsel]["location"]
         howtogo_module.howtogo_window(self, UserPosition, CanteenPosition)
+        
 
 # Run Application
 app = CanteenRecommender()

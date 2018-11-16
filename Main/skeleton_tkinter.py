@@ -57,7 +57,7 @@ class CanteenRecommender(Tk):
             frame.grid_remove()
         frame = self.frames[cont]
         frame.grid()
-        frame.winfo_toplevel().geometry("")
+        frame.winfo_toplevel().geometry("990x699")
     
     def get_page(self, page_class):
         return self.frames[page_class]

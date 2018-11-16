@@ -39,12 +39,6 @@ def howtogo_window(frame ,userlocate, cantlocate):
     status["text"] = "The distance between you and the canteen is: " + str(distance)
     status.pack(side = BOTTOM,fill="x")
 
-
-
-    ###title and mainloop##
-    frame.title('Follow the straight line')
-
-
 if __name__ == "__main__":
     root = Tk()
     howtogo_window(root, (608,400), (100, 284))

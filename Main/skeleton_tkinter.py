@@ -53,6 +53,11 @@ class CanteenRecommender(Tk):
         frame = self.frames[cont]
         frame.tkraise()
         frame.event_generate("<<ShowFrame>>")
+        for frame in self.frames.values():
+            frame.grid_remove()
+        frame = self.frames[cont]
+        frame.grid()
+        frame.winfo_toplevel().geometry("")
     
     def get_page(self, page_class):
         return self.frames[page_class]
@@ -183,16 +188,24 @@ class Choosing(Frame):
         self.bind("<<ShowFrame>>", self.on_show_frame)
         label = ttk.Label(self, text="Which Canteen would you like to go to?", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
+        def check_lstboxselected():
+            lstsel = self.controller.get_page(Choosing).lst1.state()
+            print(lstsel)
+            if lstsel not in range(len(CanteenList)):
+                button1.configure(state=DISABLED)
+            else:
+                button1.configure(state=NORMAL)
+
 
         # def reset():
         #     lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
         #     lstsel = 0
         # lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
-        button0 = ttk.Button(self, text="Click Me!",
-                                command=lambda: None)
+        button0 = ttk.Button(self, text="Select",
+                                command=lambda: combine_funcs(check_lstboxselected()))
         button0.pack()
 
-        button1 = ttk.Button(self, text="How To Go!",
+        button1 = ttk.Button(self, text="How To Go!", state=DISABLED,
                                 command=lambda: combine_funcs(controller.show_frame(GeneralDirection)))
         button1.pack()
 

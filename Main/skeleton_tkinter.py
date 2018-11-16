@@ -1,23 +1,25 @@
+# importing useful modules
 from tkinter import *
 from tkinter import ttk
 import pygame
 from pprint import pprint 
 
+# Import user files
 from data import *
 import pygame_get_user_location as location_module
 import Create_Checkbox as pref_module
-import sorting_functions as sorting_module
 import Create_DoubleListbox as listbox_module
+import sorting_functions as sorting_module
 import howtogo_window as howtogo_module
 
 # Global user variables
 PricePreference = [0,0,0] # [(< $5), ($5-10), (> $10)]
 ItemPreference =[0,0] # [Food, Beverage]
 UserPosition = (0,0) # (x-coordinate, y-coordinate)
-CanteenList = []
-CanteenList_sorted = []
-lstsel = 0
+CanteenList = [] # CanteenList sorted by distance 
+CanteenList_sorted = [] # CanteenList further sorted by PricePreference & ItemPreference
 
+# Fonts
 LARGE_FONT = ("Verdana", 12)
 
 # Functions for all Frames to use
@@ -162,24 +164,12 @@ class Preferences(Frame):
                                                               controller.show_frame(Choosing)))
         button1.pack()
 
-        # button1 = ttk.Button(self, text="Next", state=DISABLED,
-        #                         command=lambda: combine_funcs(init_dbllistbox_choosingframe(self)
-        #                                                       ))
-        # button1.pack()
-
         button2 = ttk.Button(self, text="Back to Home", 
                             command=lambda: controller.show_frame(StartPage))
         button2.pack()
 
 
-# def howtogo():
-#     global UserPosition
-#     global CanteenList
-#     global lstsel
-#     print(lstsel)
-#     CanteenPosition = CanteenList[lstsel]["location"]
-#     howtogo_module.howtogo_window(UserPosition, CanteenPosition)
-
+# "Choosing" frame
 class Choosing(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
@@ -188,6 +178,7 @@ class Choosing(Frame):
         self.bind("<<ShowFrame>>", self.on_show_frame)
         label = ttk.Label(self, text="Which Canteen would you like to go to?", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
+
         def check_lstboxselected():
             lstsel = self.controller.get_page(Choosing).lst1.state()
             print(lstsel)
@@ -196,11 +187,6 @@ class Choosing(Frame):
             else:
                 button1.configure(state=NORMAL)
 
-
-        # def reset():
-        #     lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
-        #     lstsel = 0
-        # lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
         button0 = ttk.Button(self, text="Select",
                                 command=lambda: combine_funcs(check_lstboxselected()))
         button0.pack()
@@ -220,9 +206,6 @@ class Choosing(Frame):
         self.lst1 = listbox_module.dbllistbox(self, data_entries=CanteenList_sorted)
 
 
-    
-
-
 # "GeneralDirection" frame
 class GeneralDirection(Frame):
     def __init__(self, parent, controller):
@@ -238,6 +221,7 @@ class GeneralDirection(Frame):
         button1 = ttk.Button(self, text="Quit", 
                             command=lambda: quit())
         button1.pack()
+
     def on_show_frame(self, event):
         global CanteenList
         global UserPosition
@@ -271,6 +255,6 @@ class GeneralDirection(Frame):
         # status["text"] = "The distance between you and the canteen is: " + str(distance)
         # status.pack(side = BOTTOM,fill="x")
 
-
+# Run Application
 app = CanteenRecommender()
 app.mainloop()

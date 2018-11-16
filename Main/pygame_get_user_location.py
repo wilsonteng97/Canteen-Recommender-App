@@ -1,5 +1,7 @@
 import pygame
 
+photopath = "Canteen-Recommender-App/Main/NTUcampus.png"
+
 ## define event handler for mouse click. 
 ## this event handler will be fired (activated) when user clicks a mouse button anywhere in the display window
 def MouseClick():
@@ -28,7 +30,7 @@ def get_user_location():
    screen = pygame.display.set_mode((W, H))
    pygame.display.set_caption("Click on your current location")
    # read image file and rescale it to the window size
-   screenIm = pygame.image.load("Canteen-Recommender-App/Main/NTUcampus.png")
+   screenIm = pygame.image.load(photopath)
    screenIm = pygame.transform.scale(screenIm, (W , H))
    
    # add the image over the screen object

@@ -40,9 +40,6 @@ class dbllistbox(Frame):
         selection = self.make_listbox.curselection()[0] 
         return selection
 
-    def __delete__(self, instance):
-        del self
-
 if __name__ == "__main__":
     root = Tk()
     dbl = dbllistbox(root, [

@@ -32,7 +32,7 @@ def howtogo_window(frame ,userlocate, cantlocate):
     circlecant= canvas.create_oval(cantlocate[0]-5, cantlocate[1]-5, cantlocate[0] + 5, cantlocate[1] + 5,fill="#000fff000",outline='black',width=3)
 
 
-    background_image.image = background_image  # keep a reference!
+    background_image.image = background_image  # keeps a reference
 
     ##status bar##
     status = Label(frame,bd=1,relief=SUNKEN,anchor=W)

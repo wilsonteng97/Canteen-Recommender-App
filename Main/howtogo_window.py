@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import ttk
 from sorting_functions import count_distance
 
-# photopath = r"Canteen-Recommender-App/Main/NTUcampus.png"
 
 def howtogo_window(frame ,userlocate, cantlocate):
     distance = count_distance(userlocate, cantlocate)
@@ -10,11 +9,6 @@ def howtogo_window(frame ,userlocate, cantlocate):
     ##frame##
     bottomframe = Frame(frame)
     bottomframe.pack(side=BOTTOM)
-
-    ##button##
-    button2 = ttk.Button(bottomframe, text="Quit", 
-                         command=quit)
-    button2.pack()
 
     ##canvas##
     canvas = Canvas(frame)
@@ -41,5 +35,6 @@ def howtogo_window(frame ,userlocate, cantlocate):
 
 if __name__ == "__main__":
     root = Tk()
-    howtogo_window(root, (608,400), (100, 284))
+    # howtogo_window(frame ,userlocate, cantlocate)
+    howtogo_window(root, (472, 242), (632, 291)) 
     root.mainloop()

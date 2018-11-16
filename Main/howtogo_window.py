@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from sorting_functions import count_distance
 
-photopath = r"Canteen-Recommender-App/Main/NTUcampus.png"
+# photopath = r"Canteen-Recommender-App/Main/NTUcampus.png"
 
 def howtogo_window(frame ,userlocate, cantlocate):
     distance = count_distance(userlocate, cantlocate)
@@ -21,7 +21,7 @@ def howtogo_window(frame ,userlocate, cantlocate):
     canvas.pack(fill=BOTH, expand=1) # Stretch canvas to root window size.
 
     ##image + line + circle##
-    background_image= PhotoImage(file=photopath)
+    background_image= PhotoImage(file=r"Canteen-Recommender-App/Main/NTUcampus.png")
     image = canvas.create_image((0,0), anchor='nw', image=background_image)
     line = canvas.create_line( userlocate[0] ,userlocate[1], cantlocate[0],cantlocate[1], fill="red",width=3,arrow=LAST)
 
